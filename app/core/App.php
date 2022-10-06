@@ -31,6 +31,20 @@ class App{
 			}
 			unset($url[1]);
 		}
+		//access filtering
+		$reflection = new \ReflectionObject($this->controller);
+		$classAttributes = $reflection->getAttributes();
+		$methodAttributes = $reflection->getMethod($this->method)->getAttributes();
+
+		//merge the arrays
+		$attributes = array_values(array_merge($classAttributes,$methodAttributes));
+
+		foreach($attributes as $attribute){
+			$filter = $attribute->newInstance();
+			if($filter->execute()){
+				return;
+			}
+		}
 
 		//...while passing all other parts as arguments
 		//repackage the parameters

@@ -11,7 +11,7 @@ class Vet extends \app\core\Controller{
 		//call the ->getAll() method to get all owners from the DB
 		$owners = $owner->getAll();
 		//pass the collection of owners to the view
-		print_r($owners);
+		$this->view('Vet/index',$owners);
 	}
 
 	public function add(){
@@ -28,6 +28,33 @@ class Vet extends \app\core\Controller{
 		}else{
 			$this->view('Vet/addOwner');
 		}
+	}
+
+	public function edit($owner_id){
+		$owner = new \app\models\Owner();
+		$owner = $owner->get($owner_id);
+		if(isset($_POST['action'])){
+			$owner->first_name = $_POST['first_name'];
+			$owner->last_name = $_POST['last_name'];
+			$owner->contact = $_POST['contact'];
+
+			$owner->update();
+			header('location:/Vet/index');
+		}else{
+			$this->view('Vet/editOwner', $owner);
+		}
+	}
+
+	public function delete($owner_id){
+		$owner = new \app\models\Owner();
+		$owner->owner_id = $owner_id;
+		$owner->delete();
+		header('location:/Vet/index');//redirect back to the list
+	}
+
+	public function details($owner_id){
+		$owner = new \app\models\Owner();
+		//$owner->
 	}
 
 }

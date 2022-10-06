@@ -2,7 +2,7 @@
 namespace app\core;
 
 class Model{
-	protected $_connection;
+	protected static $_connection;
 
 	public function __construct(){
 		//TODO: do better than that
@@ -13,9 +13,9 @@ class Model{
 
 		try{
 			//create a new connection to the database
-			$this->_connection = new \PDO("mysql:host=$server;dbname=$dbname",
+			self::$_connection = new \PDO("mysql:host=$server;dbname=$dbname",
 				$username, $password);
-			$this->_connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+			self::$_connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		}catch(\Exception $e){
 			exit(0);
 		}
