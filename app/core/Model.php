@@ -20,4 +20,13 @@ class Model{
 			exit(0);
 		}
 	}
+
+	public function __call($method, $arguments){
+		//Called from the object receiving the bad call
+		echo "getting a call to the $method method with arguments";
+		print_r($arguments);
+		if($this->isValid()){
+			call_user_func_array([$this, $method ], $params);
+		}
+	}
 }
