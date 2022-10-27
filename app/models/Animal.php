@@ -4,6 +4,14 @@ namespace app\models;
 class Animal extends \app\core\Model{
 	//needs to connect to the DB - through the Model base class
 
+	public $animal_id;
+	#[\app\validators\NonEmpty]
+	#[\app\validators\Name]
+	public $name;
+	#[\app\validators\NonEmpty]
+	#[\app\validators\AnimalBirthDate]
+	public $dob;
+
 	public function getAll($owner_id){
 		$SQL = "SELECT * FROM animal WHERE owner_id =:owner_id";
 		$STMT = self::$_connection->prepare($SQL);
@@ -21,11 +29,12 @@ class Animal extends \app\core\Model{
 	}
 
 	public function insert(){
-		$SQL = "INSERT INTO animal(owner_id, name, dob) VALUES (:owner_id, :name, :dob)";
+		$SQL = "INSERT INTO animal(owner_id, name, dob, profile_pic) VALUES (:owner_id, :name, :dob, :profile_pic)";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['owner_id'=>$this->owner_id, 
 						'name'=>$this->name, 
-						'dob'=>$this->dob]);// pass any data for the query
+						'dob'=>$this->dob,
+						'profile_pic'=>$this->profile_pic]);// pass any data for the query
 	}
 
 	public function update(){

@@ -21,6 +21,22 @@ class Model{
 		}
 	}
 
+	function isValid(){
+		$reflection = new \ReflectionObject($this);
+		//find the properties
+		$classProperties = $reflection->getProperties();
+		foreach($classProperties as $property){
+			$propertyAttributes = $property->getAttributes();
+			foreach($propertyAttributes as $attribute){
+				$test = $attribute->newInstance();
+				if(!test->isValidData($property->getValue($this))){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	public function __call($method, $arguments){
 		//Called from the object receiving the bad call
 		echo "getting a call to the $method method with arguments";

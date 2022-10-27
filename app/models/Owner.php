@@ -4,6 +4,13 @@ namespace app\models;
 class Owner extends \app\core\Model{
 	//needs to connect to the DB - through the Model base class
 
+	#[\app\validators\Name]
+	public $first_name;
+	#[\app\validators\Name]
+	public $last_name;
+	#[\app\validators\Email]
+	public $contact;
+
 	public function getAll(){
 		//get all records from the owner table
 		$SQL = "SELECT * FROM owner";
@@ -44,4 +51,9 @@ class Owner extends \app\core\Model{
 		$STMT->execute(['owner_id'=>$this->owner_id]);// pass any data for the query
 	}
 
+	public function deleteAnimals(){
+		$SQL = "DELETE FROM animal WHERE owner_id=:owner_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['owner_id'=>$this->owner_id]);
+	}
 }
