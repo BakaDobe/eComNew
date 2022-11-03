@@ -65,11 +65,6 @@ class User extends \app\core\Controller{
     	}
     }
 
-    public function logout(){
-    	session_destroy();
-    	header('location:/User/index?success=You have been successfully logged out.');
-    }
-
 	public function register(){
 		if(isset($_POST['action'])){
 			//verify that the password and password_confirmation match
