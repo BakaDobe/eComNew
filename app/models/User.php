@@ -19,6 +19,13 @@ class User extends \app\core\Model{
 						'password_hash'=>$this->password_hash]);// pass any data for the query
 	}
 
+	public function update2fa(){
+		$SQL = "UPDATE user SET secret_key=:secret_key WHERE user_id=:user_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['user_id'=>$this->user_id, 
+						'password_hash'=>$this->password_hash]);
+	}
+
 	// public function update(){
 	// 	$SQL = "UPDATE owner SET first_name=:first_name, last_name=:last_name, contact=:contact WHERE owner_id=:owner_id";
 	// 	$STMT = self::$_connection->prepare($SQL);
