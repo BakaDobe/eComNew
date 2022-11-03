@@ -4,10 +4,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </head>
 <body>
-This is the Main/index.php view in the app/
-views folder.
-
-<a href='/Main/index2'>go to Main/index2</a>
+	<p>This is the index of the Main controller.</p>
+	<ul>
+		<li><a href='/Food'>foods example</a></li>
+		<li><a href='/Vet/index'>Veterinarian Clinic example</a></li>
+	</ul>
 
 </body>
 </html>
