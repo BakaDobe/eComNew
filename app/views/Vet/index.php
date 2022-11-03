@@ -26,6 +26,9 @@
 	?>
 	</table>
 </p>
-<a href='/Main/index'>go to Main/index</a>
+<ul>
+	<li><a href='/Main/index'>Main index</a></li>
+</ul>
+
 </body>
 </html>
