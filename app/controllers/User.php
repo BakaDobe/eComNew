@@ -27,6 +27,19 @@ class User extends \app\core\Controller{
     	header('location:/User/index?success=You have been successfully logged out');
     }
 
+    public function check2fa(){
+    	if(!isset($_SESSION['user_id'])) header('location:/User/index');
+    	if(isset($_POST['action'])){
+    		$currentcode = $_POST['currentcode'];
+    		if(\app\core\TokenAuth6238::verify($_SESSION['secret_key'],$currentcode)){
+    			$_SESSION['secret_key'] = null;
+    			header('location:/User/account');
+    		}
+    	}else{
+    		$this->view('User/check2fa');
+    	}
+    }
+
     #[\app\filters\Login] //provide authentication service
     public function account(){
     	if(!isset($_SESSION['user_id'])){
@@ -75,6 +88,37 @@ class User extends \app\core\Controller{
 			}
 		}else{
 			$this->view('User/register');
+		}
+	}
+
+	public function makeQRCode(){
+		$data = $_GET['data'];
+		\QRcode::png($data);
+	}
+
+	#[\app\filters\Login]
+	public function setup2fa(){
+		if(isset($_POST['action'])){
+			$currentcode = $_POST['currentcode'];
+			if(\app\core\TokenAuth6238::verify($_SESSION['secret_key'],$currentcode)){
+				//the user has verified their proper 2-factor authentication setup
+				$user = new \App\models\User();
+				$user->user_id = $_SESSION['user_id'];
+				$user->secret_key = $_SESSION['secretkey'];
+				$user->update2fa();
+				header('location:/User/account');
+			}else{
+				header('location:/User/setup2fa?error=token not verified!');//reload
+			}
+		}else{
+			$secretkey = \App\core\TokenAuth6238::generateRandomClue();
+			$_SESSION['secretkey'] = $secretkey;
+			$url = \app\core\TokenAuth6238::getLocalCodeUrl(
+				$_SESSION['username'], 
+				'Example.com',
+				$secretkey,
+				'Awesome Example App');
+			$this->view('User/twoFASetup', $url);
 		}
 	}
 }
