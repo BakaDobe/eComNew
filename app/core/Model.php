@@ -29,9 +29,8 @@ class Model{
 			$propertyAttributes = $property->getAttributes();
 			foreach($propertyAttributes as $attribute){
 				$test = $attribute->newInstance();
-				if(!test->isValidData($property->getValue($this))){
+				if(!test->isValidData($property->getValue($this)))
 					return false;
-				}
 			}
 		}
 		return true;
