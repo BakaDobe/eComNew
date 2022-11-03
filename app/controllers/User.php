@@ -9,10 +9,11 @@ class User extends \app\core\Controller{
     		$user = new \app\models\User();
     		$user = $user->get($_POST['username']);
     		//verify password match
-    		if(password_verify($_POST['username'], $user->password_hash)){
+    		if(password_verify($_POST['password'], $user->password_hash)){
     			$_SESSION['username'] = $user->username;
     			$_SESSION['user_id'] = $user->user_id;
     			$_SESSION['role'] = $user->role;
+    			$_SESSION['secret_key'] = $user->secret_key;
     			header('location:/User/account');
     		}else{
     			header('location:/User/index?error=Incorect username/password combination!');
