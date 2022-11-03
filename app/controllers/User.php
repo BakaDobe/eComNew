@@ -42,15 +42,11 @@ class User extends \app\core\Controller{
 
     #[\app\filters\Login] //provide authentication service
     public function account(){
-    	if(!isset($_SESSION['user_id'])){
-    		header('location/:User/index?error="You are not allowed to access this application without logging in"');
-    		return;
-    	}
     	if(isset($_POST['action'])){
     		$user = new \app\models\User();
     		$user = $user->get($_SESSION['username']);
     		if(password_verify($_POST['old_password'],$user->password_hash)){
-    			if($_POST['new_password'] == $_POST['new_password_confirmation']){
+    			if($_POST['password'] == $_POST['password_confirmation']){
     				$user->password_hash = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
     				$user->updatePassword();
     				header('location:/User/account?success=Password modified');
