@@ -9,11 +9,14 @@
 
 <h1>Pet Details</h1>
 <dl>
-	<dt>Name</dt>
+	<dt>Name:</dt>
 	<dd><?= $data['animal']->name ?></dd>
 
-	<dt>Date of Birth</dt>
+	<dt>Date of Birth:</dt>
 	<dd><?= $data['animal']->dob ?></dd>
+
+	<dt>Country of origin:</dt>
+	<dd><?= $data['animal']->nicename ?></dd>
 </dl>
 
 <a href='/Animal/index/<? $data['owner']->owner_id?>'>Back to index</a>

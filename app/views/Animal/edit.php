@@ -11,7 +11,16 @@
 <form action='' method='post' enctype='multipart/form-data'>
 	<label>Name:<input name='name' type='text' value="<?= $data['animal']->name?>"/></label><br>
 	<label>Date of Birth:<input name='dob' type='date' value="<?= $data['animal']->dob?>"/></label><br>
-	<label>Profile Picture:<input name='profile_pic' type='file'/></label><br>
+	<label>Country of origin:
+		<select name="country_id">
+			<?php
+				foreach ($data['countries'] as $country) {
+					echo "<option value='$country->country_id'" . ($data['animal']->country_id == $country->country_id?" selected") . ">$country->nicename</option>";
+				}
+			?>
+		</select>
+	</label><br>
+	<label>Profile Picture:<input name='profile_pic' type='file'/></label><img id="profile_pic_preview" src="/images/blank.jpg" style="max-width: 200px;max-height: 200px;" /><br>
 	<input type='submit' name='action' value='Modify Pet' />
 </form>
 

@@ -11,7 +11,16 @@
 <form action='' method='post' enctype="">
 	<label>Name:<input name='name' type='text' /></label><br>
 	<label>Date of Birth:<input name='dob' type='date' /></label><br>
-	<label>Picture:<input type="file" name="profile pic"></label>
+	<label>Country of origin:
+		<select name="country_id">
+			<?php
+				foreach ($data['countries'] as $country) {
+					echo "<option value='$country->country_id'>$country->nicename</option>";
+				}
+			?>
+		</select>
+	</label><br>
+	<label>Profile Picture:<input name='profile_pic' type='file'/></label><img id="profile_pic_preview" src="/images/blank.jpg" style="max-width: 200px;max-height: 200px;" /><br>
 	<input type='submit' name='action' value='Add new pet' />
 </form>
 
